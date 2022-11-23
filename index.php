@@ -3,6 +3,7 @@
 	// echo "<br>";
 
 	
+	
 ?>
 
 
@@ -28,6 +29,25 @@ $str = "Elzero";
 echo "Last Letter Is {$str[-1]} <br>";
 echo "Last Letter Is {$str[strlen($str) - 1]} <br>";
 
+
+PHP's superglobal variables are
+{
+	$_SERVER,
+		$_SERVER is an array that includes
+		information such as headers,
+		paths, and script locations.
+		The entries in this array are created by the web server.
+		$_SERVER['SCRIPT_NAME'] returns the path of the current script:
+		$_SERVER['HTTP_HOST'] returns the Host header from the current request.
+	$GLOBALS,
+	$_REQUEST,
+	$_POST,
+	$_GET,
+	$_FILES,
+	$_ENV,
+	$_COOKIE,
+	$_SESSION.
+}
 
 									While Loop And Concept Of Loop
 {
@@ -121,6 +141,14 @@ echo "Last Letter Is {$str[strlen($str) - 1]} <br>";
 
 												Anonymous Function
 {
+	$name = "David";
+	function getName() {
+		global $name;
+		echo $name;
+	}
+	getName();
+
+	
 	$msg = "Hello";
 	$say_hello = function($name) use ($msg) {
 		return "$msg $name";
@@ -1321,6 +1349,18 @@ echo "Last Letter Is {$str[strlen($str) - 1]} <br>";
 	- Get Set Include Path
 }
 {
+	Use one of the following modes to open the file.
+	r: Opens file for read only.
+	w: Opens file for write only. Erases the contents of the file or creates a new file if it doesn't exist.
+	a: Opens file for write only.
+	x: Creates new file for write only.
+	r+: Opens file for read/write.
+	w+: Opens file for read/write. Erases the contents of the file or creates a new file if it doesn't exist.
+	a+: Opens file for read/write. Creates a new file if the file doesn't exist
+	x+: Creates new file for read/write.
+
+
+
 											082 - File System Functions Part 1 [4 Functions]
 
 	echo round(disk_total_space("C:") / 1024 / 1024 / 1024) . "<br>";
@@ -1736,6 +1776,14 @@ echo "Last Letter Is {$str[strlen($str) - 1]} <br>";
 	- Practice
 }
 {
+	$valueCookie = "Mahmoud";
+	setcookie("user", $valueCookie, time() + (86400 * 30), "/");
+	
+	if(isset($_COOKIE["user"])) {
+		echo "<br> <br>";
+		echo "Value is: " . $_COOKIE["user"] . "<br> <br>";
+	}
+
 											098 - How To Use Cookies Part 1
 
 	setcookie("style", "dark", time() + 60 * 60 * 24 * 30);
@@ -1891,7 +1939,110 @@ echo "Last Letter Is {$str[strlen($str) - 1]} <br>";
 	exit;
 }
 
+															Class
+{}
+{
+															PHP Class Constructor And Destruct
 
+	class Person {
+		public $name;
+		public $age;
+		public function __construct($name, $age) {
+			$this->name = $name;
+			$this->age = $age;
+		}
+		public function __destruct() {
+			echo "Object destroyed";
+		}
+	}
+	$p = new Person("David", 42);
+	echo $p->name;
+	unset($p);
+	
+	class Person2 extends Person {
+	}
+
+	There are two more keywords to declare visibility:
+	protected: Makes members accessible only within the class itself,
+		by inheriting, and by parent classes.
+	private: Makes members accessible only by the class that defines them
+	
+
+															PHP Class Interface
+
+	interface AnimalInterface {
+		public function makeSound();
+	}
+
+	class Dog implements AnimalInterface {
+		public function makeSound() {
+			echo "Woof! <br />";
+		}
+	}
+	class Cat implements AnimalInterface {
+		public function makeSound() {
+			echo "Meow! <br />";
+		}
+	}
+	$myObj1 = new Dog();
+	$myObj1->makeSound();
+
+	$myObj2 = new Cat();
+	$myObj2->makeSound();
+
+	A class can implement multiple interfaces
+	class Demo implements AInterface, BInterface, CInterface {
+		// Functions declared in interfaces must be defined here
+	}
+
+															PHP Class Abstract
+
+	abstract class Calc { 
+		abstract public function calculate($param); 
+		protected function getConst() { return 4; }
+	} 
+	class FixedCalc extends Calc {
+		public function calculate($param) {
+			return $this->getConst() + $param;
+		}
+	}
+	$obj = new FixedCalc();
+	echo $obj->calculate(38);
+
+															PHP Class Static
+	Objects of a class cannot access
+		static properties in the class but they can access static methods.
+		
+	class myClass {
+		static $myProperty = 42;
+		static function myMethod() {
+			echo self::$myProperty;
+		}
+	}
+
+	myClass::myMethod();
+
+															PHP Class Final
+
+	class myClass {
+		final function myFunction() {
+			echo "Parent";
+		}
+	}
+	// ERROR because a final method cannot be overridden in child classes.
+	class myClass2 extends myClass {
+		function myFunction() {
+			echo "Child";
+		}
+	}
+
+	final class myFinalClass {
+	}
+
+	// ERROR because a final class cannot be inherited.
+	class myClass extends myFinalClass {
+	}
+}
 
 
 $name = "Osama";
